@@ -4,23 +4,24 @@ import { Request } from "express";
 
 @Injectable()
 export default class JwtGuard implements CanActivate {
-    constructor(private readonly jwtService: JwtService) {}
-    async canActivate(context: ExecutionContext): Promise<boolean>{
+    constructor(private readonly jwtService: JwtService){}
+    async canActivate(context: ExecutionContext):Promise<boolean>{
         const request = context.switchToHttp().getRequest();
-        const token = this.extractTokenFromHeader(request);
-        if(!token) throw new UnauthorizedException('Token not found');
+        const token = this.validateToken(request);
+        if(!token) throw new UnauthorizedException("Token no proveido");
         try {
             const payload = await this.jwtService.verifyAsync(token,{
-                secret:process.env.jwtSecretTokenKey
+                secret: process.env.jwtSecretTokenKey
             });
             request['user'] = payload;
         } catch (error) {
-            throw new UnauthorizedException('Invalid token');
+            console.log(error)
+            throw new UnauthorizedException("Token invalido");
         }
-        return true;
+        return true
     }
-    private extractTokenFromHeader(request:Request){
-        const [type, token] = request.headers.authorization?.split(' ') ?? [];
-        return type === 'Bearer' ? token : null;
+    private validateToken(req:Request){
+        const [type, token] = req.headers.authorization?.split(' ') || [];
+        return type === 'Bearer'? token: null;
     }
 }

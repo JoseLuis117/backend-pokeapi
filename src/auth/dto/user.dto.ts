@@ -1,8 +1,14 @@
-import { IsString } from "class-validator";
+import { IsOptional, IsString } from "class-validator";
 
 export default class UserAuthDto{
+    @IsOptional()
     @IsString()
-    email: string;
+    email?: string;
+
     @IsString()
     password: string;
+
+    @IsOptional()
+    @IsString()
+    name?:string;
 }
