@@ -6,15 +6,10 @@ import { hash } from 'bcrypt';
 export class UserService {
     constructor(private readonly prisma: PrismaService) { }
     async create(data: UserDto) {
-        const findUser = await this.prisma.user.findMany({
-            where: {
-                OR: [
-                    { email: data.email },
-                    { name: data.name }
-                ]
-            },
-        });
-        if (findUser) throw new Error('User already exists');
+        const findUserByEmail = await this.findUserByEmail(data.email);
+        if (findUserByEmail) return { error: 'El email ya esta registrado' };
+        const findUserByName = await this.findUserByName(data.name);
+        if (findUserByName) return { error: 'El nombre de usuario ya esta registrado' };
         const { password, ...rest } = data;
 
         await this.prisma.user.create({
@@ -28,6 +23,17 @@ export class UserService {
     async findUserByEmail(email:string) {
         return this.prisma.user.findUnique({
             where: { email: email}
+        });
+    }
+    async findUserByName(name:string) {
+        return this.prisma.user.findFirst({
+            where: { name: name}
+        });
+    }
+    async findById(id:any) {
+        console.log(id)
+        return await this.prisma.user.findUnique({
+            where: { id: id }
         });
     }
 }
