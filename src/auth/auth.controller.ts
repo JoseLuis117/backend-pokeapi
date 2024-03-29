@@ -7,19 +7,19 @@ import JwtRefreshGuard from './guards/refresh.guard';
 
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly userService:UserService, private readonly authService:AuthService) {}
+    constructor(private readonly userService: UserService, private readonly authService: AuthService) { }
     @Post('register')
-    async register(@Body() userData: UserDto){
+    async register(@Body() userData: UserDto) {
         console.log(await this.userService.create(userData))
         return this.userService.create(userData);
     }
     @Post('login')
-    async login(@Body() userData: UserAuthDto){
-        return this.authService.login(userData);
+    async login(@Body() userData: UserAuthDto) {
+        return await this.authService.login(userData);
     }
     @UseGuards(JwtRefreshGuard)
     @Post('refresh-token')
-    async refreshToken(@Request() userData: any){
+    async refreshToken(@Request() userData: any) {
         return this.authService.refreshToken(userData);
     }
 }
