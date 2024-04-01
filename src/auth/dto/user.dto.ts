@@ -11,4 +11,6 @@ export default class UserAuthDto{
     @IsOptional()
     @IsString()
     name?:string;
+
+    
 }

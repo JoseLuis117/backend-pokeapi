@@ -14,8 +14,52 @@ datasource db {
 }
 
 model User {
-  id       String   @id @default(uuid())
-  email    String   @unique
-  name     String
-  password String
+  id               String    @id @default(uuid())
+  email            String    @unique
+  name             String
+  password         String
+  region           Regiones? @relation(fields: [regionId], references: [id])
+  regionId         Int?
+  favouritePokemon String?
+  pokemons         Pokemon[]
+  profilePicture   String?
+  bannerPicture    String?
+  socialNetworks   SocialNetwork[]
+}
+
+model Regiones {
+  id     Int    @id @default(autoincrement())
+  nombre String
+  users  User[]
+}
+
+model Pokemon {
+  id             Int     @id @default(autoincrement())
+  nombre         String
+  userId         String
+  user           User    @relation(fields: [userId], references: [id])
+  types          types[]
+  xp             Int
+  hp             Int
+  attack         Int
+  defense        Int
+  specialAttack  Int
+  specialDefense Int
+  speed          Int
+  baseExperience Int
+}
+
+model types {
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  pokemon   Pokemon? @relation(fields: [pokemonId], references: [id])
+  pokemonId Int?
+}
+
+model SocialNetwork {
+  id      Int    @id @default(autoincrement())
+  name    String
+  url     String
+  userId  String
+  user    User   @relation(fields: [userId], references: [id])
 }

@@ -21,9 +21,10 @@ export class UserService {
         return rest;
     }
     async findUserByEmail(email:string) {
-        return this.prisma.user.findUnique({
+        const user = await this.prisma.user.findUnique({
             where: { email: email}
         });
+        return user;
     }
     async findUserByName(name:string) {
         return this.prisma.user.findFirst({
@@ -31,8 +32,11 @@ export class UserService {
         });
     }
     async findUserById(id:string) {
-        return this.prisma.user.findUnique({
-            where: { id: id}
+        const user = await this.prisma.user.findUnique({
+            where: { id: id},
+            include: { pokemons: true }
         });
+        const {password, ...rest} = user;
+        return rest;
     }
 }
