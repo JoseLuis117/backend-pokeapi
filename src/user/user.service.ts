@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import UserDto from './dto/user.dto';
 import { hash } from 'bcrypt';
+import UpdateUserData from './dto/userUpdate.dto';
 @Injectable()
 export class UserService {
     constructor(private readonly prisma: PrismaService) { }
@@ -38,5 +39,21 @@ export class UserService {
         });
         const {password, ...rest} = user;
         return rest;
+    }
+    async updateUserData(data:UpdateUserData) {
+        console.log("service")
+        console.log(data);
+        const user = await this.prisma.user.update({
+            where: { id: data.id },
+            data: {
+                name: data.name? data.name : undefined,
+                favouritePokemon: data.favouritePokemon? data.favouritePokemon : undefined,
+                regionId: data.regionId? data.regionId : undefined,
+                profilePicture: data.profilePicture? data.profilePicture : undefined,
+                bannerPicture: data.bannerPicture? data.bannerPicture : undefined
+            }
+        });
+        console.log(user);
+        return user;
     }
 }

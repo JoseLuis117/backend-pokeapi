@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AuthService } from 'src/auth/auth.service';
 import JwtGuard from 'src/auth/guards/jwt.guard';
+import UpdateUserData from './dto/userUpdate.dto';
 
 @Controller('user')
 export class UserController {
@@ -17,4 +18,9 @@ export class UserController {
     async getUserByEmail(@Body() email:string){
         return this.userService.findUserByEmail(email);
     } */
+    @Patch('update')
+    @UseGuards(JwtGuard)
+    async updateUser(@Body() data:UpdateUserData){
+        return this.userService.updateUserData(data);
+    }
 }
