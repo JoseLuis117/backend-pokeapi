@@ -45,6 +45,7 @@ export class AuthService {
             subset: data.subset
         }
         return {
+            payload,
             access_token: await this.jwtService.signAsync(payload, {
                 secret: process.env.jwtSecretTokenKey,
                 expiresIn: '1h'

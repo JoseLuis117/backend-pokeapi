@@ -5,8 +5,9 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { PokemonesModule } from './pokemones/pokemones.module';
+import { PaymentModule } from './payment/payment.module';
 @Module({
-  imports: [ConfigModule.forRoot(), UserModule, AuthModule, PokemonesModule],
+  imports: [ConfigModule.forRoot(), UserModule, AuthModule, PokemonesModule, PaymentModule],
   controllers: [AppController],
   providers: [AppService],
 })

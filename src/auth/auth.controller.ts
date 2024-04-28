@@ -19,6 +19,8 @@ export class AuthController {
     @UseGuards(JwtRefreshGuard)
     @Post('refresh-token')
     async refreshToken(@Request() userData: any) {
-        return this.authService.refreshToken(userData);
+        console.log("En refresh user data")
+        console.log(userData.user)
+        return this.authService.refreshToken(userData.user);
     }
 }
