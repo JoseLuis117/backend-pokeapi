@@ -3,6 +3,7 @@ import { PrismaService } from 'src/prisma.service';
 import UserDto from './dto/user.dto';
 import { hash } from 'bcrypt';
 import UpdateUserData from './dto/userUpdate.dto';
+import { SocialDataDto } from './dto/socialData.dto';
 @Injectable()
 export class UserService {
     constructor(private readonly prisma: PrismaService) { }
@@ -21,39 +22,79 @@ export class UserService {
         });
         return rest;
     }
-    async findUserByEmail(email:string) {
+    async findUserByEmail(email: string) {
         const user = await this.prisma.user.findUnique({
-            where: { email: email}
+            where: { email: email }
         });
         return user;
     }
-    async findUserByName(name:string) {
+    async findUserByName(name: string) {
         return this.prisma.user.findFirst({
-            where: { name: name}
+            where: { name: name }
         });
     }
-    async findUserById(id:string) {
+    async findUserById(id: string) {
         const user = await this.prisma.user.findUnique({
-            where: { id: id},
-            include: { pokemons: true }
+            where: { id: id },
+            include: { pokemons: true, socialNetworks: true }
         });
-        const {password, ...rest} = user;
+        console.log(user.socialNetworks);
+        const { password, ...rest } = user;
         return rest;
     }
-    async updateUserData(data:UpdateUserData) {
+    async updateUserData(data: UpdateUserData) {
         console.log("service")
         console.log(data);
         const user = await this.prisma.user.update({
             where: { id: data.id },
             data: {
-                name: data.name? data.name : undefined,
-                favouritePokemon: data.favouritePokemon? data.favouritePokemon : undefined,
-                regionId: data.regionId? data.regionId : undefined,
-                profilePicture: data.profilePicture? data.profilePicture : undefined,
-                bannerPicture: data.bannerPicture? data.bannerPicture : undefined
+                name: data.name ? data.name : undefined,
+                favouritePokemon: data.favouritePokemon ? data.favouritePokemon : undefined,
+                regionId: data.regionId ? data.regionId : undefined,
+                profilePicture: data.profilePicture ? data.profilePicture : undefined,
+                bannerPicture: data.bannerPicture ? data.bannerPicture : undefined
             }
         });
         console.log(user);
         return user;
+    }
+
+    async createSocialNetworks(userId: string) {
+        const names = ['facebook', 'twitter', 'instagram'];
+        const initialData = names.map(nombre => ({ name: nombre, userId }));
+        const create = this.prisma.socialNetwork.createMany({
+            data:initialData
+        })
+        console.log("Social Network Initial Data");
+        console.log(create);
+        return create;
+    }
+    async updateSocialNetowkrs(socialData:SocialDataDto){
+        const id = await this.prisma.socialNetwork.findMany({
+            where:{
+                userId:socialData.userId
+            },
+            select:{
+                id:true,
+                name:true
+            }
+        });
+        console.log("Claves")
+        const claves = Object.keys(socialData);
+        console.log("Consulta ids")
+        console.log(id)
+        id.map(async(socialNetwork,index)=>{
+            const update = await this.prisma.socialNetwork.update({
+                where:{
+                    id:socialNetwork.id,
+                    name:socialNetwork.name
+                },
+                data:{
+                    url:socialData[socialNetwork.name]
+                }
+            })
+            console.log(update);
+        })
+        return {status:200}
     }
 }

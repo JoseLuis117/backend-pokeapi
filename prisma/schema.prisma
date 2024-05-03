@@ -14,30 +14,36 @@ datasource db {
 }
 
 model User {
-  id               String    @id @default(uuid())
-  email            String    @unique
+  id               String          @id @default(uuid())
+  email            String          @unique
   name             String
   password         String
-  region           Regiones? @relation(fields: [regionId], references: [id])
+  region           Regiones?       @relation(fields: [regionId], references: [id])
   regionId         Int?
   favouritePokemon String?
   pokemons         Pokemon[]
   profilePicture   String?
   bannerPicture    String?
   socialNetworks   SocialNetwork[]
+  pokeCoins        Int?
+  cartId           String?         @unique
+  cart             Cart?           @relation(fields: [cartId], references: [id])
 }
 
-model Regiones {
-  id     Int    @id @default(autoincrement())
-  nombre String
-  users  User[]
+model Cart {
+  id       String    @id @default(uuid())
+  pokemons Pokemon[]
+  user     User?
 }
+
 
 model Pokemon {
   id             Int     @id @default(autoincrement())
   nombre         String
   userId         String
   user           User    @relation(fields: [userId], references: [id])
+  cartId         String
+  cart           Cart    @relation(fields: [cartId], references: [id])
   types          types[]
   xp             Int
   hp             Int
@@ -49,6 +55,11 @@ model Pokemon {
   baseExperience Int
 }
 
+model Regiones {
+  id     Int    @id @default(autoincrement())
+  nombre String
+  users  User[]
+}
 model types {
   id        Int      @id @default(autoincrement())
   nombre    String
@@ -57,9 +68,9 @@ model types {
 }
 
 model SocialNetwork {
-  id      Int    @id @default(autoincrement())
-  name    String
-  url     String
-  userId  String
-  user    User   @relation(fields: [userId], references: [id])
+  id     Int    @id @default(autoincrement())
+  name   String
+  url    String?
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
 }

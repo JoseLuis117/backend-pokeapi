@@ -17,7 +17,11 @@ export class PaymentService {
                 }
             ],
             return_url: 'http://localhost:3000/perfil',
-            submit_type: 'pay'
+            submit_type: 'pay',
+            metadata:{
+                user_id:uuid,
+                quantity:quantity2
+            }
         })
 
         console.log("Session con await")
