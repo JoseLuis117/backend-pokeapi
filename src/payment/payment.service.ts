@@ -31,17 +31,6 @@ export class PaymentService {
     async createIntentPayment(uuid: string, email: string, quantity2: number) {
         const stripe = new Stripe(process.env.STRIPE_SECRET_API_KEY)
 
-        /* client_reference_id: uuid,
-            customer_email: email,
-            mode: 'payment',
-            line_items: [
-                {
-                    price: 'price_1PAMGFHOAHCs9Mdp3yllDN4U',
-                    quantity: quantity2
-                }
-            ],
-            return_url:'http://localhost:3000/perfil',
-            submit_type:'pay' */
         const session = await stripe.paymentIntents.create({
             amount: 3000,
             currency: 'mxn',
@@ -51,6 +40,9 @@ export class PaymentService {
             description:"1 PokeCoin",
             receipt_email: email,
             setup_future_usage:"off_session",
+            metadata:{
+                userId:uuid
+            }
         })
         return { id: session.id, client_secret: session.client_secret };
     }

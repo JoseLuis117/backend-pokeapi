@@ -26,24 +26,23 @@ model User {
   bannerPicture    String?
   socialNetworks   SocialNetwork[]
   pokeCoins        Int?
-  cartId           String?         @unique
-  cart             Cart?           @relation(fields: [cartId], references: [id])
+  cart             Cart?
 }
 
 model Cart {
   id       String    @id @default(uuid())
   pokemons Pokemon[]
-  user     User?
+  user     User?     @relation(fields: [userId], references: [id])
+  userId   String?   @unique
 }
-
 
 model Pokemon {
   id             Int     @id @default(autoincrement())
   nombre         String
   userId         String
   user           User    @relation(fields: [userId], references: [id])
-  cartId         String
-  cart           Cart    @relation(fields: [cartId], references: [id])
+  cartId         String?
+  cart           Cart?   @relation(fields: [cartId], references: [id])
   types          types[]
   xp             Int
   hp             Int
@@ -52,7 +51,8 @@ model Pokemon {
   specialAttack  Int
   specialDefense Int
   speed          Int
-  baseExperience Int
+  imageUrl       String
+  isOwnedByUser  Boolean
 }
 
 model Regiones {
@@ -60,17 +60,17 @@ model Regiones {
   nombre String
   users  User[]
 }
+
 model types {
-  id        Int      @id @default(autoincrement())
-  nombre    String
-  pokemon   Pokemon? @relation(fields: [pokemonId], references: [id])
-  pokemonId Int?
+  id      Int       @id @default(autoincrement())
+  nombre  String
+  pokemon Pokemon[]
 }
 
 model SocialNetwork {
-  id     Int    @id @default(autoincrement())
+  id     Int     @id @default(autoincrement())
   name   String
   url    String?
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User    @relation(fields: [userId], references: [id])
 }

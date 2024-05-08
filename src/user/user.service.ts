@@ -17,7 +17,8 @@ export class UserService {
         await this.prisma.user.create({
             data: {
                 ...rest,
-                password: await hash(password, 10)
+                password: await hash(password, 10),
+                pokeCoins: 0
             }
         });
         return rest;
@@ -36,7 +37,14 @@ export class UserService {
     async findUserById(id: string) {
         const user = await this.prisma.user.findUnique({
             where: { id: id },
-            include: { pokemons: true, socialNetworks: true }
+            include: {
+                pokemons: {
+                    where: {
+                        isOwnedByUser: true
+                    }
+                },
+                socialNetworks: true
+            }
         });
         console.log(user.socialNetworks);
         const { password, ...rest } = user;
@@ -63,38 +71,67 @@ export class UserService {
         const names = ['facebook', 'twitter', 'instagram'];
         const initialData = names.map(nombre => ({ name: nombre, userId }));
         const create = this.prisma.socialNetwork.createMany({
-            data:initialData
+            data: initialData
         })
         console.log("Social Network Initial Data");
         console.log(create);
         return create;
     }
-    async updateSocialNetowkrs(socialData:SocialDataDto){
+    async updateSocialNetowkrs(socialData: SocialDataDto) {
         const id = await this.prisma.socialNetwork.findMany({
-            where:{
-                userId:socialData.userId
+            where: {
+                userId: socialData.userId
             },
-            select:{
-                id:true,
-                name:true
+            select: {
+                id: true,
+                name: true
             }
         });
         console.log("Claves")
         const claves = Object.keys(socialData);
         console.log("Consulta ids")
         console.log(id)
-        id.map(async(socialNetwork,index)=>{
+        id.map(async (socialNetwork, index) => {
             const update = await this.prisma.socialNetwork.update({
-                where:{
-                    id:socialNetwork.id,
-                    name:socialNetwork.name
+                where: {
+                    id: socialNetwork.id,
+                    name: socialNetwork.name
                 },
-                data:{
-                    url:socialData[socialNetwork.name]
+                data: {
+                    url: socialData[socialNetwork.name]
                 }
             })
             console.log(update);
         })
-        return {status:200}
+        return { status: 200 }
+    }
+    async getPokeCoins(userId: string) {
+        return this.prisma.user.findFirst({
+            where: {
+                id: userId
+            },
+            select: {
+                pokeCoins: true
+            }
+        })
+    }
+    async getPokemons(userId: string) {
+        const pokemons = await this.prisma.user.findFirst({
+            where: {
+                id: userId
+            },
+            include: {
+                pokemons: {
+                    where: {
+                        isOwnedByUser: true
+                    },
+                    include: {
+                        types: true
+                    }
+                }
+            }
+        })
+        console.log(pokemons.pokemons)
+        return pokemons.pokemons;
     }
 }

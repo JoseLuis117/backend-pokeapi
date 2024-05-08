@@ -7,8 +7,9 @@ import { AuthModule } from './auth/auth.module';
 import { PokemonesModule } from './pokemones/pokemones.module';
 import { PaymentModule } from './payment/payment.module';
 import { WebhooksModule } from './webhooks/webhooks.module';
+import { CartModule } from './cart/cart.module';
 @Module({
-  imports: [ConfigModule.forRoot(), UserModule, AuthModule, PokemonesModule, PaymentModule, WebhooksModule],
+  imports: [ConfigModule.forRoot(), UserModule, AuthModule, PokemonesModule, PaymentModule, WebhooksModule, CartModule],
   controllers: [AppController],
   providers: [AppService],
 })

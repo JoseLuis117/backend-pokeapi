@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Request, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AuthService } from 'src/auth/auth.service';
 import JwtGuard from 'src/auth/guards/jwt.guard';
@@ -35,5 +35,18 @@ export class UserController {
     @UseGuards(JwtGuard)
     async updateSocialNetworks(@Body('socialData') socialData:SocialDataDto){
         return this.userService.updateSocialNetowkrs(socialData);
+    }
+
+    @UseGuards(JwtGuard)
+    @Get('get-pokecoins')
+    async getPokeCoins(@Request() req){
+        return this.userService.getPokeCoins(req.user.subset.id)
+    }
+
+    @UseGuards(JwtGuard)
+    @Get('get-pokemons')
+    async getPokemons(@Request() req){
+        const id = req.user.subset.id;
+        return this.userService.getPokemons(id);
     }
 }
