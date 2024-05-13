@@ -1,73 +1,87 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+<h1 align="center">
+  <br>
+  <img src="https://w0.peakpx.com/wallpaper/109/343/HD-wallpaper-pokemon-pikachu-cartoons-pikachu-pokemon.jpg" alt="Markdownify" width="200">
+  <br>
+    PokeApi++
+  <br>
+</h1>
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+<div align="center" style="display:flex; flex-wrap: wrap; gap: 10px; width:100%">
+  
+  <img src="https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="NextJS">
+  
+  <img src="https://img.shields.io/badge/-NestJs-ea2845?style=flat-square&logo=nestjs&logoColor=white" alt="NestJS">
 
-## Description
+  <img src="https://img.shields.io/badge/Prisma-134A68?style=plastic&logo=PRISMA&logoColor=white" alt="Prisma">
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+   <img src="https://img.shields.io/badge/tailwindcss-0F172A?&logo=tailwindcss" alt="TailWindCSS">
+    
+   <img src="https://img.shields.io/badge/-typescript-black?logo=typescript" alt="TailWindCSS">
 
-## Installation
+</div>
+
+## Table of Contents
+
+<div align="start">
+
+- [Introduction](#introduction)
+- [Features](#features)
+- [Feedback](#feedback)
+- [HowToUse](#howtouse)
+- [ENV](#ENV)
+- [Thanks](#thanks)
+
+</div>
+
+
+
+
+https://github.com/JoseLuis117/front-pokeApi/assets/74197159/71142363-12e9-4f61-a543-389a3d4bd7d1
+
+
+
+
+## Introduction
+
+This goes beyond being just a pokeapi; it's a pokeapi with JWT authentication, database integration, and web services like AWS S3, along with features for online shopping.
+
+## Features
+
+* Buy more than 1000 pokemon on the home page with pagination
+* Customize your profile
+* Buy PokeCoins
+* Add pokemons to your cart
+* Collect them all
+
+## Feedback
+
+Feel free to send me feedback on [Twitter](https://twitter.com/Luis24122797).
+## How To Use
 
 ```bash
+# Clone this repository
+$ git clone https://github.com/JoseLuis117/front-pokeApi.git
+
+# Go into the repository
+$ cd front-pokeApi
+
+# Install dependencies
 $ npm install
+
+# Run the app
+$ npm run dev
 ```
-
-## Running the app
-
+## ENV
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+NEXT_PUBLIC_URL=
+NEXT_PUBLIC_API_URL=
+NEXTAUTH_URL=
+NEXTAUTH_URL_INTERNAL=
+NEXTAUTH_SECRET=
+NEXT_PUBLIC_AWS_ACCESS_KEY_ID=
+NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY=
 ```
+## Thanks
 
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+Thanks for viewing my project
